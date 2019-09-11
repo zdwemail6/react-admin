@@ -111,6 +111,10 @@ class Login extends Component {
                         .catch((error)=>{
                             message.error('未知错误，请联系管理员');
                         })
+                        .finally(() => {
+                            //不管成功，失败都会触发清空密码
+                            this.props.form.resetFields(['password']);
+                        })
                 }
             })
         };
