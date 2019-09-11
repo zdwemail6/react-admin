@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { Form, Icon, Input, Button, message} from 'antd';
-import axios from 'axios';
+// import axios from 'axios';
+import { reqLogin } from '../../api';
 
 import {connect} from 'react-redux';
 import {saveUser} from "../../redux/action-creators";
@@ -85,7 +86,7 @@ class Login extends Component {
                     //发送请求登录
                     //1.先引入
                     //2.发送请求
-                    axios.post('http://localhost:3000/api/login',{username,password})  //请求参数返回的是一个promise对象
+                    /*axios.post('http://localhost:3000/api/login',{username,password})  //请求参数返回的是一个promise对象
                         .then(({data})=>{
                             //判断status的值  是否登录成功
                             //response中返回了许多数据  其中response.data代表的是返回体的数据
@@ -113,6 +114,20 @@ class Login extends Component {
                         })
                         .finally(() => {
                             //不管成功，失败都会触发清空密码
+                            this.props.form.resetFields(['password']);
+                        })*/
+
+                    reqLogin(username,password)
+                        .then((result) => {
+                            //登陆成功
+                            message.success('登录成功');
+                            // 保存用户数据  redux  localStorage / sessionStorage
+                            this.props.saveUser(result);
+                            // 跳转到 / 路由
+                            this.props.history.replace('/');
+                        })
+                        .catch(() => {
+                            //清空密码
                             this.props.form.resetFields(['password']);
                         })
                 }
