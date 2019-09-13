@@ -1,4 +1,4 @@
-import Login from '../components/login';
+import Login from '../containers/login';
 import Home from '../components/home';
 
 const routes = [

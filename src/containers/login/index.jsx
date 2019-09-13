@@ -2,14 +2,17 @@ import React, {Component} from 'react'
 import { Form, Icon, Input, Button, message} from 'antd';
 // import axios from 'axios';
 import { reqLogin } from '../../api';
+import withCheckLogin from '@conts/with-check-login';
 
 import {connect} from 'react-redux';
 import {saveUser} from "../../redux/action-creators";
 
-import logo from './logo.png';
+import logo from '@assets/images/logo.png';
 import './index.less'
 
 //Form组件有一个方法叫做create调用了两次，是一个高阶组件，第二次传组件，这个高阶组件就是为了传递form属性
+
+@withCheckLogin
 @connect(
     null,
     {saveUser}
