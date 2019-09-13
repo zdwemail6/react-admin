@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
-
 import { Layout, Breadcrumb } from 'antd';
 
+import withCheckLogin from '@conts/with-check-login';
 import './index.less';
 import logo from '@assets/images/logo.png';
 import LeftNav from './left-nav';
 
 const { Header, Content, Footer, Sider } = Layout;
-
+@withCheckLogin
  class BasicLayout extends Component {
 
     state = {

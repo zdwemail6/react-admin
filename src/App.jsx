@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-
+import Login from '@conts/login';
 import NotMatch from '@comps/not-match';
 import BasicLayout from '@comps/basic-layout';
 import routes from './config/routes';
@@ -9,6 +9,8 @@ import routes from './config/routes';
 class App extends Component {
     render() {
         return <Router>
+            <Switch>
+            <Route path='/login' component={Login} exact/>
             {/*<Switch>*/}
             {/*  <R  oute path="/" exact component={Home}/>*/}
             {/*  <Route path="/login" exact component={Login}/>*/}
@@ -25,6 +27,7 @@ class App extends Component {
                     <Route component={NotMatch}/>
                 </Switch>
             </BasicLayout>
+            </Switch>
         </Router>
 
     }
