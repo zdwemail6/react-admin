@@ -3,11 +3,12 @@ import { Menu,Icon } from 'antd';
 
 //用来获得三大属性
 import { withRouter, Link } from 'react-router-dom';
+import {withTranslation} from 'react-i18next';
 
 import menus from '@config/menus';
 
 const { SubMenu } = Menu;
-
+@withTranslation()
 @withRouter
  class LeftNav extends Component {
 
@@ -15,7 +16,7 @@ const { SubMenu } = Menu;
         return <Menu.Item key={menu.key}>
             <Link to={menu.key}>
                 <Icon type={menu.icon} />
-                <span>{menu.title}</span>
+                <span>{this.props.t(menu.title)}</span>
             </Link>
         </Menu.Item>
      };
@@ -29,7 +30,7 @@ const { SubMenu } = Menu;
                     title={
                         <span>
                   <Icon type={menu.icon} />
-                  <span>{menu.title}</span>
+                  <span>{this.props.t(menu.title)}</span>
                 </span>
                     }
                 >

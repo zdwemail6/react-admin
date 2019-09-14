@@ -6,8 +6,13 @@ import './index.less';
 import logo from '@assets/images/logo.png';
 import LeftNav from './left-nav';
 import HeaderMain from "./header-main";
+import {withTranslation} from 'react-i18next'
 
 const { Header, Content, Footer, Sider } = Layout;
+
+
+
+@withTranslation()
 @withCheckLogin
  class BasicLayout extends Component {
 
@@ -28,11 +33,16 @@ const { Header, Content, Footer, Sider } = Layout;
 
     render() {
         const {collapsed, isDisplay}=this.state;
+
+        //用来切换（翻译）语言
+        const {t} = this.props;
+
+
         return <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
                 <div className="basic-layout-logo">
                     <img src={logo} alt="logo"/>
-                    <h1 style={{display:isDisplay ? 'block' : 'none'}}>硅谷后台</h1>
+                    <h1 style={{display:isDisplay ? 'block' : 'none'}}>{t('title')}</h1>
                 </div>
                 <LeftNav/>
             </Sider>
