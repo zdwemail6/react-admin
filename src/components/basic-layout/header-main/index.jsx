@@ -1,30 +1,42 @@
 import React, {Component} from 'react';
-import {Button, Icon} from "antd";
+import {Button, Icon, Modal} from "antd";
 import screenfull from 'screenfull';
 import {withTranslation,getI18n} from 'react-i18next';
+import {connect} from 'react-redux';
+import dayjs from 'dayjs';
 
+import { removeUser } from '@redux/action-creators';
 import './index.less';
 
+
+
+@connect(
+    (state) => ({
+        username: state.user.user.username,
+        title: state.title
+    }),
+    {removeUser}
+)
 @withTranslation()
 class HeaderMain extends Component {
     state={
         isScreenFull:false,
-        isEnglish:getI18n().language ==='en'
+        isEnglish:getI18n().language ==='en',
+        time: dayjs().format('YYYY-MM-DD HH:mm:ss')
     };
 
     screenFull=()=>{
         if (screenfull.isEnabled) {
+            //切换全屏
             screenfull.toggle();
-
         }
     };
 
-     change=()=>{
+    change=()=>{
          this.setState({
              isScreenFull:!this.state.isScreenFull
          })
      };
-
 
     changeLanguage=()=>{
         const isEnglish = !this.state.isEnglish;
@@ -35,15 +47,42 @@ class HeaderMain extends Component {
      };
 
     componentDidMount() {
+        //绑定事件
         screenfull.on('change', this.change);
+        //设置定时器
+        setInterval(() => {
+            this.setState({
+                time: dayjs().format('YYYY-MM-DD HH:mm:ss')
+            })
+        },1000)
     }
 
-    componentWillMount() {
+    componentWillUnmount() {
+        //解绑事件
         screenfull.off('change', this.change);
+
     }
+
+    Logout = () =>{
+        //显示对话框
+        Modal.confirm({
+            title:'您确认要退出登录吗？',
+            onOk: () => {
+                //点击确认按钮的回调函数
+                //只需要移除用户数据，根据登录检验功能，会自动发跳转到logo
+                this.props.removeUser();
+            },
+            okText:'确认',
+            cancelText:'取消'
+        })
+    };
+
+
+
 
     render() {
-        const {isScreenFull,isEnglish} = this.state;
+        const {isScreenFull,isEnglish,time} = this.state;
+        const {username,title,t} = this.props;
 
 
         return (
@@ -51,12 +90,12 @@ class HeaderMain extends Component {
                 <div className='header-main-top'>
                     <Button size='small' onClick={this.screenFull}><Icon type={isScreenFull ? 'fullscreen-exit' : 'fullscreen'}/></Button>
                     <Button className='header-main-btn' onClick={this.changeLanguage}>{isEnglish?'中文':'English' }</Button>
-                    <span>欢迎,xxx</span>
-                    <Button type='link'>退出</Button>
+                    <span>欢迎,{username}</span>
+                    <Button type='link' onClick={this.Logout}>退出</Button>
                 </div>
                 <div className='header-main-bottom'>
-                    <h3>首页</h3>
-                    <span>2019-09-13 22:17:10</span>
+                    <h3>{t(title)}</h3>
+                    <span>{time}</span>
                 </div>
             </div>
         )

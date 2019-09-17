@@ -10,15 +10,16 @@ const menus = [
         title:'menus.products',
         key:'/products',
         children:[
-            {
-                icon:'home',
-                title:'menus.product',
-                key:'/product'
-            },
+
             {
                 icon:'home',
                 title:'menus.category',
                 key:'/category'
+            },
+            {
+                icon:'home',
+                title:'menus.product',
+                key:'/product'
             }
         ]
     },
