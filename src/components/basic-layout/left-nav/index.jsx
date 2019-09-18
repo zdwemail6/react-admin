@@ -76,7 +76,7 @@ const { SubMenu } = Menu;
             if (menu.children){
                 for (let j=0; j<menu.children.length;j++){
                     const cMenu = menu.children[j];
-                    if (cMenu.key === pathname){
+                    if (pathname.startsWith(cMenu.key)){
                         return cMenu.title;
                     }
                 }
@@ -101,7 +101,9 @@ const { SubMenu } = Menu;
 
     render() {
         //根据路径显示高亮
-        const { pathname } =this.props.location;
+        let { pathname } =this.props.location;
+        pathname = pathname.startsWith('/product') ? '/product' : pathname
+
         // console.log(pathname);
         const menus=this.createMenu();
 
